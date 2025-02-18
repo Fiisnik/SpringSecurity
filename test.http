@@ -1,0 +1,20 @@
+### 📌 Inscription d'un nouvel utilisateur
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "name": "testuser2",
+  "password": "123",
+  "email": "a@bc.com"
+
+}
+
+### 📌 Connexion et récupération du token
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "a@b.com",
+  "password": "password123"
+}
+

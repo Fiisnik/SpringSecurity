@@ -2,6 +2,7 @@ package com.security.security.config;
 
 
 import com.security.security.domain.User;
+import com.security.security.domain.UserProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -46,6 +47,25 @@ public class JwtService {
         .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 1000))
         .signWith(getSignInKey(), SignatureAlgorithm.HS256)
         .compact();
+  }
+
+  public String generateTokenProvider(UserProvider user) {
+    return generateToken(new HashMap<>(), user);
+  }
+
+  public String generateToken( Map<String, Object> claims, UserProvider user) {
+    claims.put("id", user.getId());
+    claims.put("email", user.getEmail());
+    claims.put("name", user.getName());
+    claims.put("provider", user.getProvider());
+
+    return Jwts.builder()
+            .setClaims(claims)
+            .setSubject(user.getEmail())
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 1000))
+            .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+            .compact();
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {

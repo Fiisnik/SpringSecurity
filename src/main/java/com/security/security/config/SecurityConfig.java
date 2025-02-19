@@ -13,36 +13,37 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 
 
-import java.util.List;
-
+@RequiredArgsConstructor // Assure l'injection automatique des dépendances
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-  private final JwtAuthenticationFilter jwtAuthFilter;
-  private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler; // Injection du SuccessHandler
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(CsrfConfigurer::disable) // Désactive CSRF
-        .authorizeHttpRequests(authorizeRequests ->
-            authorizeRequests
-                .requestMatchers("/auth/register", "/auth/login", "/categories/getAll")
-                .permitAll() // Autorise les endpoints publics
-                .anyRequest()
-                .authenticated() // Authentification nécessaire pour le reste
-        )
-        .sessionManagement(sessionManagement ->
-            sessionManagement
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Pas de sessions HTTP
-        )
-        .authenticationProvider(authenticationProvider) // Ajoute le provider d'authentification
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); // Ajoute le filtre JWT avant UsernamePasswordAuthenticationFilter
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(CsrfConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/auth/register", "/auth/login")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
+                )
+                .oauth2Login(oauth2 ->
+                        oauth2
+                                .successHandler(oAuth2AuthenticationSuccessHandler) // Utilisation de l'instance injectée
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-  }
-
-
+        return http.build();
+    }
 }

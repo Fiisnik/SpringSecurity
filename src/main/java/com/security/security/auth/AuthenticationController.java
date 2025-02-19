@@ -5,18 +5,24 @@ import com.security.security.DTO.AuthenticationResponse;
 import com.security.security.DTO.RegisterRequest;
 import com.security.security.config.JwtService;
 import com.security.security.domain.User;
+import com.security.security.domain.UserProvider;
+import com.security.security.repository.UserProvidersRepository;
 import io.jsonwebtoken.Claims;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
+
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -26,6 +32,7 @@ public class AuthenticationController {
 
   private final AuthenticationService authenticationService;
   private final JwtService jwtService;
+  private final UserProvidersRepository userProvider;
 
 
 
@@ -63,6 +70,16 @@ public class AuthenticationController {
     return ResponseEntity.ok(user);
   }
 
+  @GetMapping("/secured")
+  @PreAuthorize("isAuthenticated()")
+  public Map<String, String> securedEndpoint() {
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Accès autorisé : Utilisateur authentifié avec succès !");
+    response.put("status", "success");
+    return response;
+  }
 
 
-}
+
+
+  }

@@ -35,7 +35,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 ->
                         oauth2
-                                .successHandler(oAuth2AuthenticationSuccessHandler) // Utilisation de l'instance injectée
+                                .successHandler(oAuth2AuthenticationSuccessHandler)
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement

@@ -9,21 +9,55 @@ Content-Type: application/json
 
 }
 
-### 📌 Connexion et récupération du token
+### Connexion et récupération du token
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "a@bc.com",
+  "email": "a@bct.com",
   "password": "123"
 }
 
 ### Test du endpoint sécurisé (Google JWT)
 GET http://localhost:8080/auth/secured
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiIxZDY5M2QzNi03Mzk2LTRmZGMtODViYi1jZjFlYmFmZGI0YjQiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTczOTk2OTkwNSwiZXhwIjoxNzQxNDA5OTA1fQ.eFB2PXXfSPKaS771x0bB5NlSSPR6nZeu0KYixSSp-yg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiI3MWZhMzliOC1kMmE3LTRlZDItOTNkZC1mNDA1NjRjYzY5YzIiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTc0MDA2NDgwMywiZXhwIjoxNzQxNTA0ODAzfQ.moMDjHzyLeVA76qc4cm7M9dtF6N42EyvxxA3iuZX838
 
 ### Test du endpoint sécurisé (Facebook JWT)
 GET http://localhost:8080/auth/secured
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkZBQ0VCT09LIiwibmFtZSI6IkZpc25payBEdXJha3UiLCJpZCI6ImNmODlmMTg4LTAyZWQtNDc3YS1iNTJkLTU3ZDJkODA5NzhlOCIsImVtYWlsIjoiYWxiYS1lbWlAaG90bWFpbC5jb20iLCJzdWIiOiJhbGJhLWVtaUBob3RtYWlsLmNvbSIsImlhdCI6MTczOTk3MzY1NSwiZXhwIjoxNzQxNDEzNjU1fQ.pNXtpsgLQUVf28KILT8eNGteCemOnYuaJOd6cYG7SI0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiI5OTBjMDZiZC1mYTIwLTQ5NGQtYTlkYS0wZWI3NDhmNGExYjkiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTc0MDA1OTQzNSwiZXhwIjoxNzQxNDk5NDM1fQ.8ALqX9jRPBzUqIa2X4p0maEeSO110XXD5uSWRHSG2I4
+
+### avoir les availability
+GET http://localhost:8080/availability/71fa39b8-d2a7-4ed2-93dd-f40564cc69c2
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiI3MWZhMzliOC1kMmE3LTRlZDItOTNkZC1mNDA1NjRjYzY5YzIiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTc0MDA2NTU2NSwiZXhwIjoxNzQxNTA1NTY1fQ.zwkVIs00rxOZFNeiH_4MHzJHgjkHwrVp9VdBi5zp2NE
+
+### Test creation availability
+POST http://localhost:8080/availability/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiI3MWZhMzliOC1kMmE3LTRlZDItOTNkZC1mNDA1NjRjYzY5YzIiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTc0MDA2NTU2NSwiZXhwIjoxNzQxNTA1NTY1fQ.zwkVIs00rxOZFNeiH_4MHzJHgjkHwrVp9VdBi5zp2NE
+
+{
+  "userProvider": {
+    "id": "71fa39b8-d2a7-4ed2-93dd-f40564cc69c2"
+  },
+  "startTime": "2024-03-01T09:00:00Z",
+  "endTime": "2024-03-01T10:00:00Z"
+}
+
+### Test creation availability
+PATCH http://localhost:8080/availability/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiI3MWZhMzliOC1kMmE3LTRlZDItOTNkZC1mNDA1NjRjYzY5YzIiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTc0MDA2NTU2NSwiZXhwIjoxNzQxNTA1NTY1fQ.zwkVIs00rxOZFNeiH_4MHzJHgjkHwrVp9VdBi5zp2NE
+
+{
+  "id": "152",
+  "startTime": "2024-04-01T09:00:00Z",
+  "endTime": "2024-04-01T10:00:00Z"
+}
+
+### Test creation availability
+DELETE http://localhost:8080/availability/delete/202
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJwcm92aWRlciI6IkdPT0dMRSIsIm5hbWUiOiJCcml4b3JyIiwiaWQiOiI3MWZhMzliOC1kMmE3LTRlZDItOTNkZC1mNDA1NjRjYzY5YzIiLCJlbWFpbCI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsInN1YiI6ImV2ZXJsaW1pdGVAbGl2ZS5mciIsImlhdCI6MTc0MDA2NTU2NSwiZXhwIjoxNzQxNTA1NTY1fQ.zwkVIs00rxOZFNeiH_4MHzJHgjkHwrVp9VdBi5zp2NE
+
+

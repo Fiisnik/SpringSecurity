@@ -1,5 +1,6 @@
 package com.security.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.UUID;
@@ -24,6 +25,7 @@ public class User implements UserDetails {
   private String email;
   private String name;
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String password;
 
 
@@ -32,31 +34,37 @@ public class User implements UserDetails {
     return null;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Override
   public String getPassword() {
     return password;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Override
   public String getUsername() {
     return email;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Override
   public boolean isAccountNonExpired() {
     return true;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Override
   public boolean isAccountNonLocked() {
     return true;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Override
   public boolean isCredentialsNonExpired() {
     return true;
   }
 
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @Override
   public boolean isEnabled() {
     return true;

@@ -5,23 +5,15 @@ import com.security.security.DTO.AuthenticationResponse;
 import com.security.security.DTO.RegisterRequest;
 import com.security.security.config.JwtService;
 import com.security.security.domain.User;
-import com.security.security.domain.UserProvider;
 import com.security.security.repository.UserProvidersRepository;
 import io.jsonwebtoken.Claims;
-
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -78,8 +70,6 @@ public class AuthenticationController {
     response.put("status", "success");
     return response;
   }
-
-
 
 
   }
